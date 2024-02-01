@@ -1,27 +1,37 @@
-# Zadanie:
-Zaprojektować backend (API), który będzie umożliwiał użytkownikowi zarządzanie
-listą codziennych zadań (to-do app)
-## Wymagana funkcjonalność:
-1. Logowanie użytkownika (zawartość aplikacji powinna być dostępna tylko dla
-   zalogowanych użytkowników)
-2. Implementacja dwóch typów użytkowników - zwykły użytkownik oraz
-   administrator
-3. Endpoint umożliwiający dodanie nowego zadania do bazy danych (tylko przez
-   zalogowanego użytkownika)
-4. Endpoint umożliwiający pobranie z bazy konkretnego zadania (tylko dla
-   zalogowanego użytkownika, który dodatkowo jest autorem zadania)
-5. Endpoint umożliwiający pobranie z bazy wszystkich zadań (tylko dla
-   administratora)
-## Dodatkowe informacje:
-1. Można wykorzystać dowolne biblioteki jakie będą potrzebne do napisania
-   aplikacji
-2. Dowolność bazy danych
-3. Uwierzytelnianie użytkowników powinno być oparte o tokeny JWT
-4. Oczekiwane technologie: Node.js, Express.js, TypeScript
 ## Konfiguracja bazy danych z użyciem migracji
 
-Wykonaj migrację, aby utworzyć schemat bazy danych: `npx knex migrate:latest --knexfile knexfile.ts`
+### Krok 1: Uruchomienie kontenera Docker
+Aby rozpocząć, wykonaj poniższą komendę w terminalu, aby uruchomić kontenery Docker:
+`docker-compose up -d`
 
-Załaduj bazę danych danymi początkowymi: `npx knex seed:run`
+### Krok 2: Wykonanie migracji
+Następnie, aby utworzyć schemat bazy danych, użyj poniższej komendy migracji:
+`npx knex migrate:latest --knexfile knexfile.ts`
 
-Aby cofnąć migrację bazy danych: `npx knex migrate:rollback --all`
+### Krok 3: Załadowanie danych początkowych
+Aby wypełnić bazę danych danymi początkowymi, wykonaj komendę seed:
+`npx knex seed:run`
+
+### Krok 4: Cofnięcie migracji
+W przypadku konieczności cofnięcia migracji bazy danych użyj komendy:
+`npx knex migrate:rollback --all`
+
+### Konto administratora
+- **Email:** admin@gmail.com
+- **Hasło:** admin
+
+### Konto użytkownika
+- **Email:** user@gmail.com
+- **Hasło:** user
+
+### Ścieżki API
+
+#### Autentykacja (auth)
+- Wylogowanie (logout): http://localhost:8080/api/auth/logout
+- Logowanie (login): http://localhost:8080/api/auth/login
+- Rejestracja (register): http://localhost:8080/api/auth/register
+
+#### Zarządzanie zadaniami (tasks)
+- Stworzenie zadania (dostępne tylko dla zalogowanego użytkownika): http://localhost:8080/api/task 
+- Pobranie jednego zadania (dla twórcy): http://localhost:8080/api/task/1
+- Pobranie wszystkich zadań (tylko dla administratora): http://localhost:8080/api/task
