@@ -3,16 +3,20 @@
 ### Krok 1: Uruchomienie kontenera Docker
 Aby rozpocząć, wykonaj poniższą komendę w terminalu, aby uruchomić kontenery Docker:
 `docker-compose up -d`
-
-### Krok 2: Wykonanie migracji
+### Krok 2: Pobranie zależności
+Przejdź do folderu /server i wykonaj poniższą komendę, aby zainstalować niezbędne zależności:
+`cd server`
+`npm install`
+### Krok 3: Wykonanie migracji
+Wszystkie poniższe komendy muszą być wywoływane z folderu server/src/database
 Następnie, aby utworzyć schemat bazy danych, użyj poniższej komendy migracji:
 `npx knex migrate:latest --knexfile knexfile.ts`
 
-### Krok 3: Załadowanie danych początkowych
+### Krok 4: Załadowanie danych początkowych
 Aby wypełnić bazę danych danymi początkowymi, wykonaj komendę seed:
 `npx knex seed:run`
 
-### Krok 4: Cofnięcie migracji
+### Krok 5: Cofnięcie migracji
 W przypadku konieczności cofnięcia migracji bazy danych użyj komendy:
 `npx knex migrate:rollback --all`
 
