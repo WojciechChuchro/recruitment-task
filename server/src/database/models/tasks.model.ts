@@ -27,7 +27,7 @@ class Tasks extends Model implements Task {
 
     static get relationMappings() {
         return {
-            user: {
+            creator: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Users,
                 join: {
@@ -35,11 +35,47 @@ class Tasks extends Model implements Task {
                     to: 'users.id',
                 },
             },
+            users: {
+                relation: Model.HasManyRelation,
+                modelClass: Users,
+                join: {
+                    from: 'tasks.userId',
+                    to: 'users.id',
+                },
+            },
+
+
         };
     }
 
     static get tableName(): string {
         return 'tasks';
+    }
+
+    static async createTask(Task: Task) {
+        try {
+            await Tasks.query().insert(Task);
+        } catch (error) {
+            console.error('Error creating task:', error);
+            throw error;
+        }
+    }
+
+    static async getTaskById(id: number): Promise<Task>{
+        try {
+            return await Tasks.query().findById(id);
+        } catch (error) {
+            console.error('Error getting task:', error);
+            throw error;
+        }
+    }
+    static async getAllTasks(): Promise<Tasks[]> {
+        try {
+            return await Tasks.query();
+        } catch (error) {
+            console.error('Error getting all tasks:', error);
+            throw error;
+        }
     }
 }
 
