@@ -1,11 +1,21 @@
 import { Model } from "objection";
 import knex from "../config/database";
 import Tasks from "./tasks.model";
-import { User } from "./types";
 import {authentication} from "../../helpers";
 
 Model.knex(knex);
-enum UserRole {
+export interface User {
+  id?: number;
+  email: string;
+  name: string;
+  surname: string;
+  password: string;
+  salt: string;
+  sessionToken: string | null;
+  role: UserRole
+}
+
+export enum UserRole {
   ADMIN = 'ADMIN',
   USER = 'USER',
 }
@@ -59,6 +69,15 @@ class Users extends Model implements User {
 
   static get tableName(): string {
     return "users";
+  }
+  static async getUserById(id: number): Promise<Users | null> {
+    try {
+      const user = await Users.query().findById(id);
+      return user || null;
+    } catch (error) {
+      console.error("Error getting user by ID:", error);
+      return null;
+    }
   }
 
   static async getUserByEmail(email: string): Promise<Users | null> {
