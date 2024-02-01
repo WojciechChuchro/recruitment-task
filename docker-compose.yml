@@ -1,0 +1,26 @@
+version: "3"
+services:
+
+  database:
+    image: mysql:8.2.0
+    container_name: mysql_container
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USERNAME=${DB_USERNAME}
+    ports:
+      - ${MYSQL_PORT}
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.1-apache
+    container_name: phpmyadmin_container
+    environment:
+      - PMA_HOST=${DB_HOST}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    ports:
+      - ${PHPMYADMIN_PORT}
+    depends_on:
+      - database
+
+

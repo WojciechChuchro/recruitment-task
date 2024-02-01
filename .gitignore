@@ -1,0 +1,7 @@
+# Express
+/server/node_modules/
+/server/dist/
+
+# Other
+.vscode/
+*.idea/
