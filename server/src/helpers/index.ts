@@ -1,9 +1,13 @@
 import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
+import jwt, {JwtPayload} from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import * as process from 'process';
 import path from 'path';
-import { DecodedToken } from '../types/config';
+
+export interface DecodedToken extends JwtPayload {
+  userId: string;
+}
+
 
 const envFilePath = path.join(__dirname, '../../.env');
 dotenv.config({ path: envFilePath });
