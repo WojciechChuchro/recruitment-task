@@ -1,6 +1,9 @@
 import dotenv from 'dotenv';
 import path from 'path';
-import { KnexConfig } from '../types/config';
+import {Knex} from "knex";
+export interface KnexConfig {
+  [key: string]: Knex.Config;
+}
 
 const envFilePath = path.join(__dirname, '../../.env');
 dotenv.config({ path: envFilePath });
