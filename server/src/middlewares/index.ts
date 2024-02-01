@@ -11,7 +11,7 @@ export const authenticateJWT = (
   if (!JsonWebToken) {
     return res.status(401).json({ message: 'Unauthorized: Missing token' });
   }
-  const token = Array.isArray(JsonWebToken) ? JsonWebToken[0] : JsonWebToken; // Take the first one if it's an array
+  const token = Array.isArray(JsonWebToken) ? JsonWebToken[0] : JsonWebToken;
 
   const decodedJwt = decodeJWT(token);
 
