@@ -25,13 +25,13 @@ export const login = async (req: Request, res: Response) => {
     const user: Users = await Users.getUserByEmail(email);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "Invalid credentials" });
     }
 
     const expectedHash = authentication(user.salt, password);
 
     if ((await Users.getHashedPassword(user.email)) !== expectedHash) {
-      return res.status(401).send({ message: "invalid password" });
+      return res.status(401).send({ message: "Invalid credentials" });
     }
 
     const sessionToken = generateSessionToken(user.id.toString());
